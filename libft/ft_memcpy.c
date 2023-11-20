@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moturki <marvin@42lausanne.ch>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 23:58:46 by moturki           #+#    #+#             */
-/*   Updated: 2023/11/17 23:58:47 by moturki          ###   ########.fr       */
+/*   Created: 2023/10/23 11:07:34 by moturki           #+#    #+#             */
+/*   Updated: 2023/10/23 11:07:35 by moturki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include <signal.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "ft_printf/ft_printf.h"
-# include "libft/libft.h"
-
-typedef struct s_list2
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	int		bit;
-	int		pid;
-	int		trigger;
-	char	c;
-}				t_list2;
+	size_t	i;
+	char	*str;
+	char	*str2;
 
-#endif
+	i = 0;
+	if (!dest && !src)
+		return (NULL);
+	str = (char *)dest;
+	str2 = (char *)src;
+	while (i++ < n)
+		*str++ = *str2++;
+	return (dest);
+}

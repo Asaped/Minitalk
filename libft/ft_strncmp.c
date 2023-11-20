@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moturki <marvin@42lausanne.ch>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 23:58:46 by moturki           #+#    #+#             */
-/*   Updated: 2023/11/17 23:58:47 by moturki          ###   ########.fr       */
+/*   Created: 2023/10/23 11:19:13 by moturki           #+#    #+#             */
+/*   Updated: 2023/10/23 15:57:48 by moturki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include <signal.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "ft_printf/ft_printf.h"
-# include "libft/libft.h"
-
-typedef struct s_list2
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int		bit;
-	int		pid;
-	int		trigger;
-	char	c;
-}				t_list2;
+	size_t			i;
 
-#endif
+	i = 0;
+	while (i < n && (s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - s2[i]);
+		i++;
+	}
+	return (0);
+}

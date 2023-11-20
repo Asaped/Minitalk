@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moturki <marvin@42lausanne.ch>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 23:58:46 by moturki           #+#    #+#             */
-/*   Updated: 2023/11/17 23:58:47 by moturki          ###   ########.fr       */
+/*   Created: 2023/10/23 10:57:42 by moturki           #+#    #+#             */
+/*   Updated: 2023/10/23 10:57:46 by moturki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include <signal.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "ft_printf/ft_printf.h"
-# include "libft/libft.h"
-
-typedef struct s_list2
+int	ft_atoi(const char *nptr)
 {
-	int		bit;
-	int		pid;
-	int		trigger;
-	char	c;
-}				t_list2;
+	int	sign;
+	int	res;
 
-#endif
+	sign = 1;
+	res = 0;
+	while (*nptr && (*nptr == 32 || (*nptr >= 9 && *nptr <= 13)))
+		nptr++;
+	if (*nptr == '-')
+			sign = -1;
+	if (*nptr == '+' || *nptr == '-')
+		nptr++;
+	while (*nptr >= '0' && *nptr <= '9' && *nptr)
+	{
+		res *= 10;
+		res += *nptr - 48;
+		nptr++;
+	}
+	return (res * sign);
+}

@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moturki <marvin@42lausanne.ch>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 23:58:46 by moturki           #+#    #+#             */
-/*   Updated: 2023/11/17 23:58:47 by moturki          ###   ########.fr       */
+/*   Created: 2023/10/23 11:06:12 by moturki           #+#    #+#             */
+/*   Updated: 2023/10/23 11:06:13 by moturki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include <signal.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "ft_printf/ft_printf.h"
-# include "libft/libft.h"
-
-typedef struct s_list2
+t_list	*ft_lstlast(t_list *lst)
 {
-	int		bit;
-	int		pid;
-	int		trigger;
-	char	c;
-}				t_list2;
-
-#endif
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}

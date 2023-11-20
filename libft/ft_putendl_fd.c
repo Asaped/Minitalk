@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moturki <marvin@42lausanne.ch>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 23:58:46 by moturki           #+#    #+#             */
-/*   Updated: 2023/11/17 23:58:47 by moturki          ###   ########.fr       */
+/*   Created: 2023/10/23 11:09:55 by moturki           #+#    #+#             */
+/*   Updated: 2023/10/23 11:09:56 by moturki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include <signal.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "ft_printf/ft_printf.h"
-# include "libft/libft.h"
-
-typedef struct s_list2
+void	ft_putendl_fd(char *s, int fd)
 {
-	int		bit;
-	int		pid;
-	int		trigger;
-	char	c;
-}				t_list2;
-
-#endif
+	if (!s)
+		return ;
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
+}

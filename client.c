@@ -1,42 +1,87 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: moturki <marvin@42lausanne.ch>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/18 00:03:13 by moturki           #+#    #+#             */
+/*   Updated: 2023/11/18 00:07:52 by moturki          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
-static int	ft_strlen(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-int main(int ac, char **av)
+static void	send_pid(char *c_pid, int s_pid)
 {
 	int	i;
 	int	bit;
 
 	i = -1;
-	if (ac == 3)
+	while (++i <= ft_strlen(c_pid))
 	{
-		while (++i <= ft_strlen(av[2]))
+		bit = 0;
+		while (bit < 8)
 		{
-			bit = 0;
-			while (bit < 8)
-			{
-				if (((av[2][i] >> bit) & 1) == 0)
-				{
-					printf("bit send\n");
-					kill(atoi(av[1]), SIGUSR2);
-				}
-				else if (((av[2][i] >> bit) & 1) == 1)
-				{
-					printf("bi1t send\n");
-					kill(atoi(av[1]), SIGUSR1);
-				}
-				usleep(100);
-				bit++;
-			}
-			printf("\n");
+			if (((c_pid[i] >> bit & 1)) == 0)
+				kill(s_pid, SIGUSR2);
+			else if (((c_pid[i] >> bit) & 1) == 1)
+				kill(s_pid, SIGUSR1);
+			bit++;
+			usleep(80);
 		}
 	}
+}
+
+static void	send_msg(char *c_pid, int s_pid, char *message)
+{
+	int	i;
+	int	bit;
+
+	send_pid(c_pid, s_pid);
+	i = -1;
+	while (++i <= ft_strlen(message))
+	{
+		bit = 0;
+		while (bit < 8)
+		{
+			if (((message[i] >> bit & 1)) == 0)
+				kill(s_pid, SIGUSR2);
+			else if (((message[i] >> bit) & 1) == 1)
+				kill(s_pid, SIGUSR1);
+			bit++;
+			usleep(80);
+		}
+	}
+}
+
+static void	receive_confirmation(int signum)
+{
+	if (signum == SIGUSR1)
+		ft_printf("Message received !\n");
+	exit(1);
+}
+
+int	main(int ac, char **av)
+{
+	pid_t	pid;
+	char	*str;
+
+	if (ac == 3 && av[1][0] && av[2][0])
+	{
+		str = ft_itoa(getpid());
+		pid = atoi(av[1]);
+		if (pid < 0)
+		{
+			ft_printf("Error !\nProcess ID is invalid.\n");
+			return (0);
+		}
+		send_msg(str, pid, av[2]);
+		signal(SIGUSR1, receive_confirmation);
+		while (1)
+			pause();
+	}
+	else
+		ft_printf("Error !\nUsage : ./client process_id message.\n");
+	return (0);
 }

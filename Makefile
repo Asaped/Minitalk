@@ -1,10 +1,10 @@
-NAME		=	server
+NAME		=	client
 
-NAME2		=	client
+NAME2		=	server
 
-SRCS		=	server.c
+SRCS		=	client.c
 
-SRCS2		=	client.c
+SRCS2		=	server.c
 
 OBJS		=	$(SRCS:.c=.o)
 
@@ -18,18 +18,21 @@ RM			=	rm -f
 
 all			:	$(NAME) $(NAME2)
 
-$(NAME)		:	$(OBJS)
-				$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
-			
-$(NAME2)		:	$(OBJS2)
-				$(CC) $(CFLAGS) -o $(NAME2) $(OBJS2)
+$(NAME)		:	$(OTHER) $(OBJS)
+				make -C libft/
+				make -C ft_printf/
+				$(CC) $(CFLAGS) -o $(NAME) libft/libft.a ft_printf/libftprintf.a $(OBJS)
 
+$(NAME2)	:	$(OTHER) $(OBJS2)
+				make -C libft/
+				make -C ft_printf/
+				$(CC) $(CFLAGS) -o $(NAME2) libft/libft.a ft_printf/libftprintf.a $(OBJS2)
 
 clean		: 
-				$(RM) $(OBJS) $(OBJS2)
+				$(RM) $(OBJS) $(OBJS2) libft/*.o ft_printf/*.o
 
 fclean		:	clean
-				$(RM) $(NAME) $(NAME2)
+				$(RM) $(NAME) $(NAME2) libft/libft.a ft_printf/libftprintf.a
 
 re			:	fclean all
 
